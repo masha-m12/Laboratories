@@ -3,6 +3,23 @@
 #include <string>
 #include <vector>
 
+struct Sequence {
+    int value = INT_MIN;
+    std::ifstream* file;
+    bool ended = true;
+    bool isValueValid = false;
+    void readNext() {
+        int prevValue = value;
+        isValueValid = (file->is_open() && *file >> value);
+        if (isValueValid) {
+            ended = (value < prevValue);
+        }
+        else {
+            ended = true;
+        }
+    }
+};
+
 bool createFileWithRandomNumbers(const std::string& fileName, const int numbersCount, const int maxNumberValue) {
     srand(time(0));
 
@@ -100,31 +117,25 @@ void mergeFiles(std::string& fileA, std::string& fileB, std::string& fileC, std:
         return;
     }
 
-    //реализовано слияние из А, В в С - чтобы понять
-    //нужно реализовать разбиение из А, В в С, D по отрезкам
-    int valueA, valueB;
-    bool readA = (fA >> valueA).good();
-    bool readB = (fB >> valueB).good();
+    Sequence seq1, seq2;
+    seq1.file = &fA;
+    seq2.file = &fB;
 
-    while (readA && readB) {
-        if (valueA < valueB) {
-            fC << valueA << " ";
-            readA = (fA >> valueA).good();
+    seq1.readNext();
+    seq2.readNext();
+
+    while (seq1.isValueValid || seq2.isValueValid) {
+        while (!seq1.ended || !seq2.ended) {
+            if (!seq1.ended && (seq2.ended || seq1.value <= seq2.value)) {
+                fC << seq1.value << " ";
+                seq1.readNext();
+            }
+            else if (!seq2.ended) {
+                fC << seq2.value << " ";
+                seq2.readNext();
+            }
         }
-        else {
-            fC << valueB << " ";
-            readB = (fB >> valueB).good();
-        }
-    }
-
-    while (readA) {
-        fC << valueA << " ";
-        readA=(fA >> valueA).good();
-    }
-
-    while (readB) {
-        fC << valueB << " ";
-        readA = (fB >> valueB).good();
+        fC.swap(fD);
     }
 
     fA.close();
@@ -134,6 +145,11 @@ void mergeFiles(std::string& fileA, std::string& fileB, std::string& fileC, std:
 }
 
 //написать общую функцию сортировки файла
+std::string sortFiles(const std::string& file, std::string& fileA, std::string& fileB, std::string& fileC, std::string& fileD) {
+    splitFiles(file, fileA, fileB);
+    mergeFiles(fileA, fileB, fileC, fileD);
+    return fileA;
+}
 
 //нужно для того, чтоб видеть содержимое файлов в консоли
 void printFile(const std::string& fileName) {
@@ -168,11 +184,13 @@ int main() {
 
     //закинуть в (общую) функцию сортировки и вызывать только ее
     splitFiles("file.txt", fileA, fileB);
+    //sortFiles("file.txt", fileA, fileB, fileC, fileD);
     printFile(fileA);
     printFile(fileB);
 
     mergeFiles(fileA, fileB, fileC, fileD);
     printFile(fileC);
+    printFile(fileD);
 
     return 0;
 }
