@@ -2,6 +2,10 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <climits>
+#include <ctime>
+#include <cstdlib>
+#include <locale>  
 
 struct Sequence {
     int value = INT_MIN;
@@ -10,7 +14,7 @@ struct Sequence {
     bool isValueValid = false;
     void readNext() {
         int prevValue = value;
-        isValueValid = (file->is_open() && *file >> value);
+        isValueValid = (file->is_open() && (*file >> value));
         if (isValueValid) {
             ended = (value < prevValue);
         }
@@ -144,53 +148,27 @@ void mergeFiles(std::string& fileA, std::string& fileB, std::string& fileC, std:
     fD.close();
 }
 
-//написать общую функцию сортировки файла
 std::string sortFiles(const std::string& file, std::string& fileA, std::string& fileB, std::string& fileC, std::string& fileD) {
     splitFiles(file, fileA, fileB);
     mergeFiles(fileA, fileB, fileC, fileD);
     return fileA;
 }
 
-//нужно для того, чтоб видеть содержимое файлов в консоли
-void printFile(const std::string& fileName) {
-    std::ifstream file(fileName);
-
-    if (!file.is_open()) {
-        std::cerr << "Ошибка при открытии файла: " << fileName << "\n";
-        return;
-    }
-
-    std::cout << "Содержимое файла " << fileName << ": ";
-
-    int number;
-    while (file >> number) {
-        std::cout << number << " ";
-    }
-
-    std::cout << "\n";
-    file.close();
-}
-
 int main() {
     setlocale(LC_ALL, "Russian");
 
     createFileWithRandomNumbers("file.txt", 10, 100);
-    printFile("file.txt");
 
     std::string fileA = "fileA.txt";
     std::string fileB = "fileB.txt";
     std::string fileC = "fileC.txt";
     std::string fileD = "fileD.txt";
 
-    //закинуть в (общую) функцию сортировки и вызывать только ее
-    splitFiles("file.txt", fileA, fileB);
-    //sortFiles("file.txt", fileA, fileB, fileC, fileD);
-    printFile(fileA);
-    printFile(fileB);
-
-    mergeFiles(fileA, fileB, fileC, fileD);
-    printFile(fileC);
-    printFile(fileD);
+    std::string sortFile = sortFiles("file.txt", fileA, fileB, fileC, fileD);
+    std::cout << isFileContainsSortedArray(sortFile);
+    if (isFileContainsSortedArray(sortFile) == 1) {
+        std::cout << "Файл" << sortFile << "отсортирован." << "\n";
+    }
 
     return 0;
 }
