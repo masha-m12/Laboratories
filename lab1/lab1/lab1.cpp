@@ -9,7 +9,7 @@
 
 struct Sequence {
     int value = INT_MIN;
-    std::ifstream* file;
+    std::ifstream* file = nullptr;
     bool ended = true;
     bool isValueValid = false;
     void readNext() {
@@ -25,8 +25,6 @@ struct Sequence {
 };
 
 bool createFileWithRandomNumbers(const std::string& fileName, const int numbersCount, const int maxNumberValue) {
-    srand(time(0));
-
     std::ofstream file(fileName);
     if (!file.is_open()) {
         std::cerr << "Не удалось открыть файл для записи: " << fileName << "\n";
@@ -63,7 +61,7 @@ bool isFileContainsSortedArray(const std::string& fileName) {
 
 }
 
-void splitFiles(const std::string& file, std::string& fileA, std::string& fileB) {
+void splitFiles(const std::string& file, const std::string& fileA, const std::string& fileB) {
     std::ifstream f(file);
     std::ofstream fA(fileA);
     std::ofstream fB(fileB);
@@ -110,7 +108,7 @@ void splitFiles(const std::string& file, std::string& fileA, std::string& fileB)
     fB.close();
 }
 
-void mergeFiles(std::string& fileA, std::string& fileB, std::string& fileC, std::string& fileD) {
+void mergeFiles(const std::string& fileA, const std::string& fileB, const std::string& fileC, const std::string& fileD) {
     std::ifstream fA(fileA);
     std::ifstream fB(fileB);
     std::ofstream fC(fileC);
@@ -148,26 +146,44 @@ void mergeFiles(std::string& fileA, std::string& fileB, std::string& fileC, std:
     fD.close();
 }
 
-std::string sortFiles(const std::string& file, std::string& fileA, std::string& fileB, std::string& fileC, std::string& fileD) {
+std::string sortFile(const std::string& file,
+    const std::string fileA = "fileA.txt",
+    const std::string fileB = "fileB.txt",
+    const std::string fileC = "fileC.txt",
+    const std::string fileD = "fileD.txt") {
     splitFiles(file, fileA, fileB);
-    mergeFiles(fileA, fileB, fileC, fileD);
+
+    bool isFileBEmpty = false;
+    bool isFileDEmpty = false;
+
+    while (!isFileBEmpty && !isFileDEmpty) {
+        mergeFiles(fileA, fileB, fileC, fileD);
+
+        std::ifstream checkFileD(fileD);
+        isFileDEmpty = !checkFileD.good();
+
+        if (isFileDEmpty) {
+            break;
+        }
+
+        mergeFiles(fileC, fileD, fileA, fileB);
+
+        std::ifstream checkFileB(fileB);
+        isFileBEmpty = !checkFileB.good();
+    }
+
     return fileA;
 }
 
 int main() {
+    srand(time(0));
     setlocale(LC_ALL, "Russian");
 
     createFileWithRandomNumbers("file.txt", 10, 100);
 
-    std::string fileA = "fileA.txt";
-    std::string fileB = "fileB.txt";
-    std::string fileC = "fileC.txt";
-    std::string fileD = "fileD.txt";
-
-    std::string sortFile = sortFiles("file.txt", fileA, fileB, fileC, fileD);
-    std::cout << isFileContainsSortedArray(sortFile);
-    if (isFileContainsSortedArray(sortFile) == 1) {
-        std::cout << "Файл" << sortFile << "отсортирован." << "\n";
+    std::string sortedFile = sortFile("file.txt");
+    if (isFileContainsSortedArray(sortedFile) == 1) {
+        std::cout << "Файл" << sortedFile << "отсортирован." << "\n";
     }
 
     return 0;
