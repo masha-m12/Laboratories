@@ -137,6 +137,10 @@ void mergeFiles(const std::string& fileA, const std::string& fileB, const std::s
                 seq2.readNext();
             }
         }
+
+        seq1.ended = !seq1.isValueValid;
+        seq2.ended = !seq2.isValueValid;
+
         fC.swap(fD);
     }
 
@@ -151,28 +155,31 @@ std::string sortFile(const std::string& file,
     const std::string fileB = "fileB.txt",
     const std::string fileC = "fileC.txt",
     const std::string fileD = "fileD.txt") {
+
     splitFiles(file, fileA, fileB);
 
-    bool isFileBEmpty = false;
-    bool isFileDEmpty = false;
+    std::string input1 = fileA;
+    std::string input2 = fileB;
+    std::string output1 = fileC;
+    std::string output2 = fileD;
 
-    while (!isFileBEmpty && !isFileDEmpty) {
-        mergeFiles(fileA, fileB, fileC, fileD);
+    while (true) {
+        mergeFiles(input1, input2, output1, output2);
 
-        std::ifstream checkFileD(fileD);
-        isFileDEmpty = !checkFileD.good();
+        Sequence seq;
+        std::ifstream currentInput(input2);
+        seq.file = &currentInput;
+        seq.readNext();
 
-        if (isFileDEmpty) {
-            break;
+        if (!seq.isValueValid) {
+            return output1;
         }
 
-        mergeFiles(fileC, fileD, fileA, fileB);
-
-        std::ifstream checkFileB(fileB);
-        isFileBEmpty = !checkFileB.good();
+        std::swap(input1, output1);
+        std::swap(input2, output2);
     }
 
-    return fileA;
+    return output1;
 }
 
 int main() {
@@ -183,7 +190,7 @@ int main() {
 
     std::string sortedFile = sortFile("file.txt");
     if (isFileContainsSortedArray(sortedFile) == 1) {
-        std::cout << "Файл" << sortedFile << "отсортирован." << "\n";
+        std::cout << "Файл " << sortedFile << " отсортирован." << "\n";
     }
 
     return 0;
