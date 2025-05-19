@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+#include <algorithm>
 #include "BinaryTree.h"
 
 BinaryTree::Node::Node()
@@ -53,8 +55,34 @@ bool BinaryTree::isEmpty() const {
     return m_root == nullptr;
 }
 
+int BinaryTree::height() const {
+    return height(m_root);
+}
+
 int BinaryTree::countNodes() const {
     return countNodes(m_root);
+}
+
+int BinaryTree::min() const {
+    if (isEmpty()) {
+        return INT_MAX;
+    }
+    Node* current = m_root;
+    while (current->leftChild()) {
+        current = current->leftChild();
+    }
+    return current->key();
+}
+
+int BinaryTree::max() const {
+    if (isEmpty()) {
+        return INT_MIN;
+    }
+    Node* current = m_root;
+    while (current->rightChild()) {
+        current = current->rightChild();
+    }
+    return current->key();
 }
 
 BinaryTree::Node* BinaryTree::addNode(Node* root, int key)
@@ -71,15 +99,52 @@ BinaryTree::Node* BinaryTree::addNode(Node* root, int key)
     return root;
 }
 
+BinaryTree::Node* BinaryTree::addNode(int key)
+{
+    if (m_root) {
+        return addNode(m_root, key);
+    }
+    else {
+        return m_root = new Node(key);
+    }
+}
+
 bool BinaryTree::searchNodeByKey(int key) const {
     return nlrSearch(m_root, key);
+}
+
+bool BinaryTree::isBalanced() {
+    return isBalanced(m_root);
+}
+
+BinaryTree& BinaryTree::operator=(const BinaryTree& other) {
+    if (this != &other) {
+        clear();
+        m_root = copyTree(other.m_root);
+    }
+    return *this;
+}
+
+BinaryTree& BinaryTree::operator=(BinaryTree other) {
+    std::swap(m_root, other.m_root);
+    return *this;
 }
 
 BinaryTree::Node* BinaryTree::copyTree(Node* root) {
     if (!root) {
         return nullptr;
     }
+    Node* copyNode = new Node(root->key());
+    copyNode->setLeftChild(copyTree(root->leftChild()));
+    copyNode->setRightChild(copyTree(root->rightChild()));
+    return copyNode;
+}
 
+int BinaryTree::height(Node* node) const {
+    if (!node) {
+        return 0;
+    }
+    return 1 + std::max(height(node->leftChild()), height(node->rightChild()));
 }
 
 void BinaryTree::clear(Node* node) {
@@ -107,6 +172,18 @@ void BinaryTree::printHorizontal(Node* root, int marginLeft, int levelSpacing) c
     printHorizontal(root->rightChild(), marginLeft + levelSpacing, levelSpacing);
     std::cout << std::string(marginLeft, ' ') << root->key() << std::endl;
     printHorizontal(root->leftChild(), marginLeft + levelSpacing, levelSpacing);
+}
+
+bool BinaryTree::isBalanced(Node* node) {
+    if (!node) {
+        return 0;
+    }
+    int left = isBalanced(node->leftChild());
+    int right = isBalanced(node->rightChild());
+    if (left == 0 || right == 0 || abs(left - right) > 1) {
+        return false;
+    }
+    return true;
 }
 
 void BinaryTree::printLevels(Node* root, int leftBorderPos, int rightBorderPos, int yPos) const //реализация с презентации - доработать!

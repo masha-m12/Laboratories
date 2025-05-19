@@ -37,15 +37,24 @@ public:
     void deleteSubtree();
     bool isEmpty() const;
 
+    int height() const;
     int countNodes() const;
+    
+    int min() const;
+    int max() const;
 
     Node* addNode(Node* root, int key);
+    Node* addNode(int key);
 
     bool deleteNodeByKey(int key);
     bool searchNodeByKey(int key) const;
 
+    bool isBalanced();
+    int getLevelByKey(int key);
+    std::vector<int> allTreeKeys;
+
     void printHorizontal() const;
-    void printLevels() const;
+    void printLevels() const; 
 
     BinaryTree& operator=(const BinaryTree& other);
     BinaryTree& operator=(BinaryTree other);
@@ -56,7 +65,9 @@ private:
     Node* copyTree(Node* root);
 
     void clear(Node* node);
+    int height(Node* node) const;
     int countNodes(Node* node) const;
+    bool isBalanced(Node* node);
     void printHorizontal(Node* root, int marginLeft, int levelSpacing) const;
     void printLevels(Node* root, int leftBorderPos, int rightBorderPos, int yPos) const;
 
@@ -65,22 +76,8 @@ private:
 };
 
 /*
--конструкторы(по умолчанию и с параметрами);
-
--конструкторы(по умолчанию, копирования, перемещения);
--деструктор;
--получение корня дерева;
--очистка дерева(удаление всех узлов);
--удаление поддеревьев узла;
--isEmpty(возвращает true, если дерево пусто);
--получение количества узлов дерева;
--добавление узла в дерево(методом случайного выбора поддерева);
--удаление узла из дерева по ключу(возвращает true, если узел был удалён);
--поиск узла дерева по ключу;
--проверка дерева на сбалансированность(возвращает true, если дерево является сбалансированным : высоты правого и левого поддеревьев отличаются не более, чем на единицу, и сами поддеревья также являются сбалансированными);
--получение уровня вершины по ключу(возвращает индекс уровня или - 1, если вершина не найдена);
--вывод в консоль дерева в горизонтальном виде(самый правый потомок находится на первой строке, самый левый - на нижней);
--вывод в консоль дерева по уровням в консоль;
--оператор присваивания;
--оператор перемещения.
+Необходимые методы класса BinaryTree:
+- проверка дерева на сбалансированность (возвращает true, если дерево является сбалансированным: высоты правого и левого поддеревьев отличаются не более, чем на единицу, и сами поддеревья также являются сбалансированными);
+- получение уровня вершины по ключу (возвращает индекс уровня или -1, если вершина не найдена);
+- получение вектора (std::vector<int>), содержащего все ключи дерева по возрастанию (обход вершин производить любым способом);
 */
