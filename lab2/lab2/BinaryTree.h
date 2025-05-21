@@ -29,6 +29,7 @@ public:
     
     BinaryTree() = default;
     BinaryTree(const BinaryTree& other);
+    BinaryTree(BinaryTree&& other) noexcept;
     ~BinaryTree();
 
     Node* root() const;
@@ -51,10 +52,10 @@ public:
 
     bool isBalanced();
     int getLevelByKey(int key);
-    std::vector<int> allTreeKeys;
+    std::vector<int> allTreeKeys();
 
     void printHorizontal() const;
-    void printLevels() const; 
+    void printLevels() const;
 
     BinaryTree& operator=(const BinaryTree& other);
     BinaryTree& operator=(BinaryTree other);
@@ -65,19 +66,15 @@ private:
     Node* copyTree(Node* root);
 
     void clear(Node* node);
+    void deleteSubtree(Node* node);
     int height(Node* node) const;
     int countNodes(Node* node) const;
+    int min(Node* node) const;
+    int max(Node* node) const;
     bool isBalanced(Node* node);
     void printHorizontal(Node* root, int marginLeft, int levelSpacing) const;
-    void printLevels(Node* root, int leftBorderPos, int rightBorderPos, int yPos) const;
+    void printLevels(Node* root, int level) const;
 
     Node* nlrSearch(Node* node, int key) const;
     Node* remove(Node* node, int key);
 };
-
-/*
-Необходимые методы класса BinaryTree:
-- проверка дерева на сбалансированность (возвращает true, если дерево является сбалансированным: высоты правого и левого поддеревьев отличаются не более, чем на единицу, и сами поддеревья также являются сбалансированными);
-- получение уровня вершины по ключу (возвращает индекс уровня или -1, если вершина не найдена);
-- получение вектора (std::vector<int>), содержащего все ключи дерева по возрастанию (обход вершин производить любым способом);
-*/

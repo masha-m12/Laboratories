@@ -38,6 +38,11 @@ BinaryTree::BinaryTree(const BinaryTree& other) {
     m_root = copyTree(other.m_root);
 }
 
+BinaryTree::BinaryTree(BinaryTree&& other) noexcept
+    : m_root(other.m_root) {
+    other.m_root = nullptr;
+}
+
 BinaryTree::~BinaryTree() {
     clear(m_root);
 }
@@ -49,6 +54,10 @@ BinaryTree::Node* BinaryTree::root() const {
 void BinaryTree::clear() {
     clear(m_root);
     m_root = nullptr;
+}
+
+void BinaryTree::deleteSubtree() {
+    deleteSubtree(m_root);
 }
 
 bool BinaryTree::isEmpty() const {
@@ -64,25 +73,11 @@ int BinaryTree::countNodes() const {
 }
 
 int BinaryTree::min() const {
-    if (isEmpty()) {
-        return INT_MAX;
-    }
-    Node* current = m_root;
-    while (current->leftChild()) {
-        current = current->leftChild();
-    }
-    return current->key();
+    return min(m_root);
 }
 
 int BinaryTree::max() const {
-    if (isEmpty()) {
-        return INT_MIN;
-    }
-    Node* current = m_root;
-    while (current->rightChild()) {
-        current = current->rightChild();
-    }
-    return current->key();
+    return max(m_root);
 }
 
 BinaryTree::Node* BinaryTree::addNode(Node* root, int key)
@@ -117,6 +112,41 @@ bool BinaryTree::isBalanced() {
     return isBalanced(m_root);
 }
 
+int BinaryTree::getLevelByKey(int key) {
+    Node* current = m_root;
+    int level = 0;
+
+    while (current) {
+        if (key == current->key()) {
+            return level;
+        }
+        else if (key < current->key()) {
+            current = current->leftChild();
+        }
+        else {
+            current = current->rightChild();
+        }
+        level++;
+    }
+    return -1;
+}
+
+void BinaryTree::printHorizontal() const {
+    printHorizontal(m_root, 0, 5);
+}
+
+void BinaryTree::printLevels() const {
+    if (!m_root) {
+        return;
+    }
+
+    int h = height(m_root);
+    for (int level = 0; level < h; ++level) {
+        printLevels(m_root, level);
+        std::cout << std::endl;
+    }
+}
+
 BinaryTree& BinaryTree::operator=(const BinaryTree& other) {
     if (this != &other) {
         clear();
@@ -140,13 +170,6 @@ BinaryTree::Node* BinaryTree::copyTree(Node* root) {
     return copyNode;
 }
 
-int BinaryTree::height(Node* node) const {
-    if (!node) {
-        return 0;
-    }
-    return 1 + std::max(height(node->leftChild()), height(node->rightChild()));
-}
-
 void BinaryTree::clear(Node* node) {
     if (!node) {
         return;
@@ -157,12 +180,51 @@ void BinaryTree::clear(Node* node) {
     node = nullptr;
 }
 
+void BinaryTree::deleteSubtree(Node* node) {
+    if (!node) {
+        return;
+    }
+    deleteSubtree(node->leftChild());
+    deleteSubtree(node->rightChild());
+    delete node;
+    node = nullptr;
+}
+
+int BinaryTree::height(Node* node) const {
+    if (!node) {
+        return 0;
+    }
+    return 1 + std::max(height(node->leftChild()), height(node->rightChild()));
+}
+
 int BinaryTree::countNodes(Node* node) const {
     if (!node) {
         return 0;
     }
     return 1 + countNodes(node->leftChild()) + countNodes(node->rightChild());
 }
+
+int BinaryTree::min(Node* node) const {
+    if (!node) {
+        return INT_MAX;
+    }
+    Node* current = m_root;
+    while (current->leftChild()) {
+        current = current->leftChild();
+    }
+    return current->key();
+}
+
+int BinaryTree::max(Node* node) const {
+    if (!node) {
+        return INT_MIN;
+    }
+    Node* current = m_root;
+    while (current->rightChild()) {
+        current = current->rightChild();
+    }
+    return current->key();
+} 
 
 void BinaryTree::printHorizontal(Node* root, int marginLeft, int levelSpacing) const
 {
@@ -186,16 +248,19 @@ bool BinaryTree::isBalanced(Node* node) {
     return true;
 }
 
-void BinaryTree::printLevels(Node* root, int leftBorderPos, int rightBorderPos, int yPos) const //реализация с презентации - доработать!
+void BinaryTree::printLevels(Node* node, int level) const
 {
-    if (root == nullptr) {
+    if (node == nullptr) {
         return;
     }
-    int xPos = (leftBorderPos + rightBorderPos) / 2;
-    //ToDo: перенос курсор в точку (xPos, yPos)
-    //ToDo: вывод root->key() 
-    printLevels(root->leftChild(), leftBorderPos, xPos, yPos + 15);
-    printLevels(root->rightChild(), xPos, rightBorderPos, yPos + 15);
+
+    if (level == 0) {
+        std::cout << node->key() << " ";
+        return;
+    }
+
+    printLevels(node->leftChild(), level - 1);
+    printLevels(node->rightChild(), level - 1);
 }
 
 BinaryTree::Node* BinaryTree::nlrSearch(Node* root, int key) const
