@@ -131,6 +131,24 @@ int BinaryTree::getLevelByKey(int key) {
     return -1;
 }
 
+void BinaryTree::lrnTraversal(Node* root, std::vector<int>& keys) const
+{
+    if (root == nullptr) {
+        return;
+    }
+
+    lrnTraversal(root->leftChild(), keys);
+    keys.push_back(root->key());
+    lrnTraversal(root->rightChild(), keys);
+}
+
+std::vector<int> BinaryTree::allTreeKeys() {
+    std::vector<int>keys;
+    lrnTraversal(m_root, keys);
+    std::sort(keys.begin(), keys.end());
+    return keys;
+}
+
 void BinaryTree::printHorizontal() const {
     printHorizontal(m_root, 0, 5);
 }
@@ -208,23 +226,21 @@ int BinaryTree::min(Node* node) const {
     if (!node) {
         return INT_MAX;
     }
-    Node* current = m_root;
-    while (current->leftChild()) {
-        current = current->leftChild();
-    }
-    return current->key();
+    int left = min(node->leftChild());
+    int right = min(node->rightChild());
+
+    return std::min(node->key(), std::min(left, right));
 }
 
 int BinaryTree::max(Node* node) const {
     if (!node) {
         return INT_MIN;
     }
-    Node* current = m_root;
-    while (current->rightChild()) {
-        current = current->rightChild();
-    }
-    return current->key();
-} 
+    int left = max(node->leftChild());
+    int right = max(node->rightChild());
+
+    return std::max(node->key(), std::max(left, right));
+}
 
 void BinaryTree::printHorizontal(Node* root, int marginLeft, int levelSpacing) const
 {

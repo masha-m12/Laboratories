@@ -26,7 +26,7 @@ public:
         Node* m_leftChild = nullptr;
         Node* m_rightChild = nullptr;
     };
-    
+
     BinaryTree() = default;
     BinaryTree(const BinaryTree& other);
     BinaryTree(BinaryTree&& other) noexcept;
@@ -40,7 +40,7 @@ public:
 
     int height() const;
     int countNodes() const;
-    
+
     int min() const;
     int max() const;
 
@@ -52,6 +52,8 @@ public:
 
     bool isBalanced();
     int getLevelByKey(int key);
+
+    void lrnTraversal(Node* root, std::vector<int>& keys) const;
     std::vector<int> allTreeKeys();
 
     void printHorizontal() const;
