@@ -78,5 +78,5 @@ private:
     void printLevels(Node* root, int level) const;
 
     Node* nlrSearch(Node* node, int key) const;
-    Node* remove(Node* node, int key);
+    Node* remove(Node* node, Node* parent);
 };

@@ -104,6 +104,10 @@ BinaryTree::Node* BinaryTree::addNode(int key)
     }
 }
 
+bool BinaryTree::deleteNodeByKey(int key) {
+
+}
+
 bool BinaryTree::searchNodeByKey(int key) const {
     return nlrSearch(m_root, key);
 }
@@ -289,4 +293,30 @@ BinaryTree::Node* BinaryTree::nlrSearch(Node* root, int key) const
         subTreeSearchResult = nlrSearch(root->rightChild(), key);
     }
     return subTreeSearchResult;
+}
+
+BinaryTree::Node* BinaryTree::remove(Node* node, Node* parent) {
+    if (!node) {
+        return nullptr;
+    }
+
+    if (!node->leftChild() && !node->rightChild()) {
+        delete node;
+        return nullptr;
+    }
+
+    if (!node->leftChild()) {
+        Node* replacement = node->rightChild();
+        delete node;
+        return replacement;
+    }
+    else if (!node->rightChild()) {
+        Node* replacement = node->leftChild();
+        delete node;
+        return replacement;
+    }
+
+    else {
+        //У n есть оба потомка
+    }
 }
