@@ -29,9 +29,13 @@ int main()
     int max = tree.max();
     std::cout << "Максимальный ключ: " << max << "\n";
 
-    int key = 7;
+    int key = 5;
     int level = tree.getLevelByKey(key);
     std::cout << "Уровень узла с ключом " << key << ": " << level << "\n";
+
+    std::cout << "Дерево после удаления 10:\n";
+    tree.deleteNodeByKey(10);
+    tree.printLevels();
 
     return 0;
 }

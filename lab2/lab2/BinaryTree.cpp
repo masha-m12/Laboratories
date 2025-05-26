@@ -104,8 +104,50 @@ BinaryTree::Node* BinaryTree::addNode(int key)
     }
 }
 
-bool BinaryTree::deleteNodeByKey(int key) {
+bool BinaryTree::searchNodeWithParent(Node* node, Node* parent, int key, Node*& findNode, Node*& parentFindNode) {
+    if (!node) {
+        return false;
+    }
 
+    if (node->key() == key) {
+        findNode = node;
+        parentFindNode = parent;
+        return true;
+    }
+    if (searchNodeWithParent(node->leftChild(), node, key, findNode, parentFindNode)) {
+        return true;
+    }
+    if (searchNodeWithParent(node->rightChild(), node, key, findNode, parentFindNode)) {
+        return true;
+    }
+
+    return false;
+}
+
+bool BinaryTree::deleteNodeByKey(int key) {
+    Node* parent = nullptr;
+    Node* node = nullptr;
+
+    bool search = searchNodeWithParent(m_root, nullptr, key, node, parent);
+    if (!search) {
+        return false;
+    }
+
+    Node* replacement = remove(node, parent);
+
+    if (node == m_root) {
+        m_root = replacement;
+    }
+    if (parent != nullptr) {
+        if (parent->leftChild() == node) {
+            parent->setLeftChild(replacement);
+        }
+        else {
+            parent->setRightChild(replacement);
+        }
+    }
+
+    return true;
 }
 
 bool BinaryTree::searchNodeByKey(int key) const {
@@ -117,22 +159,7 @@ bool BinaryTree::isBalanced() {
 }
 
 int BinaryTree::getLevelByKey(int key) {
-    Node* current = m_root;
-    int level = 0;
-
-    while (current) {
-        if (key == current->key()) {
-            return level;
-        }
-        else if (key < current->key()) {
-            current = current->leftChild();
-        }
-        else {
-            current = current->rightChild();
-        }
-        level++;
-    }
-    return -1;
+    return getLevelByKey(m_root, key, 1);
 }
 
 void BinaryTree::lrnTraversal(Node* root, std::vector<int>& keys) const
@@ -268,6 +295,21 @@ bool BinaryTree::isBalanced(Node* node) {
     return true;
 }
 
+int BinaryTree::getLevelByKey(Node* node, int key, int level) const {
+    if (!node) {
+        return -1;
+    }
+    if (node->key() == key) {
+        return level;
+    }
+    if (key < node->key()) {
+        return getLevelByKey(node->leftChild(), key, level + 1);
+    }
+    else {
+        return getLevelByKey(node->rightChild(), key, level + 1);
+    }
+}
+
 void BinaryTree::printLevels(Node* node, int level) const
 {
     if (node == nullptr) {
@@ -315,8 +357,21 @@ BinaryTree::Node* BinaryTree::remove(Node* node, Node* parent) {
         delete node;
         return replacement;
     }
-
     else {
-        //У n есть оба потомка
+        Node* replacement = node->rightChild();
+        Node* replacementParent = node;
+
+        if (replacementParent != nullptr) {
+            if (replacementParent->leftChild() == replacement) {
+                replacementParent->setLeftChild(nullptr);
+            }
+            else {
+                replacementParent->setRightChild(nullptr);
+            }
+            replacement->setLeftChild(node->leftChild());
+            replacement->setRightChild(node->rightChild());
+        }
+        delete node;
+        return replacement;
     }
 }
