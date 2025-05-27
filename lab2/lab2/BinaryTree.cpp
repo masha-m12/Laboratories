@@ -285,14 +285,14 @@ void BinaryTree::printHorizontal(Node* root, int marginLeft, int levelSpacing) c
 
 bool BinaryTree::isBalanced(Node* node) {
     if (!node) {
-        return 0;
+        return true;
     }
-    int left = isBalanced(node->leftChild());
-    int right = isBalanced(node->rightChild());
-    if (left == 0 || right == 0 || abs(left - right) > 1) {
+    int left = height(node->leftChild());
+    int right = height(node->rightChild());
+    if (abs(left - right) > 1) {
         return false;
     }
-    return true;
+    return isBalanced(node->leftChild()) && isBalanced(node->rightChild());
 }
 
 int BinaryTree::getLevelByKey(Node* node, int key, int level) const {
