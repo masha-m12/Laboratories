@@ -30,7 +30,7 @@ public:
     BinaryTree() = default;
     BinaryTree(const BinaryTree& other);
     BinaryTree(BinaryTree&& other) noexcept;
-    ~BinaryTree();
+    virtual ~BinaryTree();
 
     Node* root() const;
 
@@ -40,11 +40,11 @@ public:
 
     int height() const;
     int countNodes() const;
-
+    
     int min() const;
     int max() const;
 
-    Node* addNode(Node* root, int key);
+    virtual Node* addNode(Node* root, int key);
     Node* addNode(int key);
 
     bool searchNodeWithParent(Node* node, Node* parent, int key, Node*& findNode, Node*& parentFindNode);
@@ -63,6 +63,16 @@ public:
     BinaryTree& operator=(const BinaryTree& other);
     BinaryTree& operator=(BinaryTree other);
 
+protected:
+    virtual int min(Node* node) const;
+    virtual int max(Node* node) const;
+
+    virtual int getLevelByKey(Node* node, int key, int level) const;
+    virtual void lrnTraversal(Node* root, std::vector<int>& keys) const;
+
+    virtual Node* nlrSearch(Node* node, int key) const;
+    virtual Node* remove(Node* node, Node* parent);
+
 private:
     Node* m_root = nullptr;
 
@@ -73,15 +83,7 @@ private:
     int height(Node* node) const;
     int countNodes(Node* node) const;
 
-    int min(Node* node) const;
-    int max(Node* node) const;
-
     bool isBalanced(Node* node);
-    int getLevelByKey(Node* node, int key, int level) const;
-    void lrnTraversal(Node* root, std::vector<int>& keys) const;
     void printHorizontal(Node* root, int marginLeft, int levelSpacing) const;
     void printLevels(Node* root, int level) const;
-
-    Node* nlrSearch(Node* node, int key) const;
-    Node* remove(Node* node, Node* parent);
 };
