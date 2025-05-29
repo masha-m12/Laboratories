@@ -133,7 +133,7 @@ bool BinaryTree::deleteNodeByKey(int key) {
         return false;
     }
 
-    Node* replacement = remove(node, parent);
+    remove(node, parent);
 
     return true;
 }
@@ -345,6 +345,16 @@ BinaryTree::Node* BinaryTree::remove(Node* node, Node* parent) {
     else {
         replacement = node->rightChild();
         Node* replacementParent = node;
+
+        while (replacement->leftChild() || replacement->rightChild()) {
+            replacementParent = replacement;
+            if(replacement->leftChild()){
+                replacement = replacement->leftChild();
+            }
+            else {
+                replacement->rightChild();
+            }
+        }
 
         if (replacementParent != nullptr) {
             if (replacementParent->leftChild() == replacement) {
