@@ -41,49 +41,41 @@ BinaryTreeSearch::Node* BinaryTreeSearch::addNode(Node* root, int key)
     else if (key < root->key()) {
         root->setLeftChild(addNode(root->leftChild(), key));
     }
-    else {
+    else if (key > root->key()) {
         root->setRightChild(addNode(root->rightChild(), key));
     }
 
     return root;
 }
 
-BinaryTreeSearch::Node* BinaryTreeSearch::remove(Node* node, int key) {
-    if (!node) {
-        return nullptr;
-    }
-
+BinaryTreeSearch::Node* BinaryTreeSearch::findReplacement(Node* node) {
     Node* replacement = nullptr;
 
-    if (node->key() > key) {
-        Node* newLeftChild = remove(node->leftChild(), key);
-        node->setLeftChild(newLeftChild);
+    if (!node->leftChild() || !node->rightChild()) {
+        replacement = BinaryTree::findReplacement(node);
     }
-    else if (node->key() < key) {
-        Node* newRightChild = remove(node->rightChild(), key);
-        node->setRightChild(newRightChild);
-    }
-    else {
-        if (!node->leftChild() && !node->rightChild()) {
-            replacement = nullptr;
-        }
-        else if (!node->leftChild()) {
-            replacement = node->rightChild();
-        }
-        else {
-            replacement = node->leftChild();
-        }
 
-        Node* replacement = node->rightChild();
-        while (replacement->leftChild()) {
+    else {
+        replacement = node->rightChild();
+        Node* replacementParent = node;
+
+        while (replacement->leftChild() != nullptr) {
+            replacementParent = replacement;
             replacement = replacement->leftChild();
         }
 
-        node->setKey(replacement->key());
-        Node* newRightChild = remove(node->rightChild(), replacement->key());
-        node->setRightChild(newRightChild);
+        if (replacement != node->rightChild()) {
+            if (replacementParent->leftChild() == replacement) {
+                replacementParent->setLeftChild(replacement->rightChild());
+            }
+            else {
+                replacementParent->setRightChild(replacement->rightChild());
+            }
+            replacement->setRightChild(node->rightChild());
+        }
+        replacement->setLeftChild(node->leftChild());
     }
-    return node;
+    return replacement;
 }
 
 BinaryTreeSearch::Node* BinaryTreeSearch::nlrSearch(Node* node, int key) const {

@@ -27,7 +27,7 @@ protected:
     int max(Node* node) const override;
 
     Node* addNode(Node* root, int key) override;
-    Node* remove(Node* node, int key);
+    Node* findReplacement(Node* node) override;
     Node* nlrSearch(Node* node, int key) const override;
 
     int getLevelByKey(Node* node, int key, int level) const override;
