@@ -330,43 +330,7 @@ BinaryTree::Node* BinaryTree::remove(Node* node, Node* parent) {
         return nullptr;
     }
 
-    Node* replacement = nullptr;
-
-    if (!node->leftChild() && !node->rightChild()) {
-        replacement = nullptr;
-    }
-
-    if (!node->leftChild()) {
-        replacement = node->rightChild();
-    }
-    else if (!node->rightChild()) {
-        replacement = node->leftChild();
-    }
-    else {
-        replacement = node->rightChild();
-        Node* replacementParent = node;
-
-        while (replacement->leftChild() || replacement->rightChild()) {
-            replacementParent = replacement;
-            if(replacement->leftChild()){
-                replacement = replacement->leftChild();
-            }
-            else {
-                replacement->rightChild();
-            }
-        }
-
-        if (replacementParent != nullptr) {
-            if (replacementParent->leftChild() == replacement) {
-                replacementParent->setLeftChild(nullptr);
-            }
-            else {
-                replacementParent->setRightChild(nullptr);
-            }
-            replacement->setLeftChild(node->leftChild());
-            replacement->setRightChild(node->rightChild());
-        }
-    }
+    Node* replacement = findReplacement(node);
 
     if (node == m_root) {
         m_root = replacement;
@@ -381,5 +345,46 @@ BinaryTree::Node* BinaryTree::remove(Node* node, Node* parent) {
     }
 
     delete node;
+    return replacement;
+}
+
+BinaryTree::Node* BinaryTree::findReplacement(Node* node) {
+    Node* replacement = nullptr;
+
+    if (!node->leftChild() && !node->rightChild()) {
+        replacement = nullptr;
+    }
+
+    else if (!node->leftChild()) {
+        replacement = node->rightChild();
+    }
+    else if (!node->rightChild()) {
+        replacement = node->leftChild();
+    }
+    else {
+        replacement = node->rightChild();
+        Node* replacementParent = node;
+
+        while (replacement->leftChild() || replacement->rightChild()) {
+            replacementParent = replacement;
+            if (replacement->leftChild()) {
+                replacement = replacement->leftChild();
+            }
+            else {
+                replacement = replacement->rightChild();
+            }
+        }
+
+        if (replacementParent != nullptr) {
+            if (replacementParent->leftChild() == replacement) {
+                replacementParent->setLeftChild(nullptr);
+            }
+            else {
+                replacementParent->setRightChild(nullptr);
+            }
+            replacement->setLeftChild(node->leftChild());
+            replacement->setRightChild(node->rightChild());
+        }
+    }
     return replacement;
 }
