@@ -71,11 +71,12 @@ protected:
     virtual void lrnTraversal(Node* root, std::vector<int>& keys) const;
 
     virtual Node* nlrSearch(Node* node, int key) const;
-    virtual Node* remove(Node* node, Node* parent);
+    Node* remove(Node* node, Node* parent);
+    virtual Node* findReplacement(Node* node);
 
-private:
     Node* m_root = nullptr;
 
+private:
     Node* copyTree(Node* root);
 
     void clear(Node* node);
