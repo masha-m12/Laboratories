@@ -34,6 +34,14 @@ void BinaryTree::Node::setRightChild(Node* rightChild) {
     m_rightChild = rightChild;
 }
 
+int BinaryTree::Node::height() const {
+    return m_height;
+}
+
+void BinaryTree::Node::setHeight(int height) {
+    m_height = height;
+}
+
 BinaryTree::BinaryTree(const BinaryTree& other) {
     m_root = copyTree(other.m_root);
 }
