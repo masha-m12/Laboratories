@@ -48,6 +48,16 @@ BinaryTreeSearch::Node* BinaryTreeSearch::addNode(Node* root, int key)
     return root;
 }
 
+BinaryTreeSearch::Node* BinaryTreeSearch::searchMin(Node* node) {
+    if (!node) {
+        return nullptr;
+    }
+    while (node->leftChild() != nullptr) {
+        node = node->leftChild();
+    }
+    return node;
+}
+
 BinaryTreeSearch::Node* BinaryTreeSearch::findReplacement(Node* node) {
     Node* replacement = nullptr;
 
@@ -56,13 +66,8 @@ BinaryTreeSearch::Node* BinaryTreeSearch::findReplacement(Node* node) {
     }
 
     else {
-        replacement = node->rightChild();
+        replacement = searchMin(node->rightChild());
         Node* replacementParent = node;
-
-        while (replacement->leftChild() != nullptr) {
-            replacementParent = replacement;
-            replacement = replacement->leftChild();
-        }
 
         if (replacement != node->rightChild()) {
             if (replacementParent->leftChild() == replacement) {
