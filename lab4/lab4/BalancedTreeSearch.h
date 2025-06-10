@@ -16,6 +16,8 @@ public:
     Node* copyNodeSubtree(Node* root);
 
 protected:
+    Node* addNode(Node* root, int key, bool& isFixed);
+    Node* remove(Node* node, int key, bool& isFixed);
 
 private:
     int heightDifference(const Node* node) const;

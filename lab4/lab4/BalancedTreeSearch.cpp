@@ -93,15 +93,45 @@ BalancedTreeSearch::Node* BalancedTreeSearch::rotateLeft(Node* middle) {
     return bottom;
 }
 
-//к добавлению
-if (!root) {
-    root = new Node(key);
+BalancedTreeSearch::Node* BalancedTreeSearch::addNode(Node* root, int key, bool& isFixed) {
+    if (!root) {
+        isFixed = false;
+        root = new Node(key);
+    }
+
+    if (key == root->key()) {
+        isFixed = true;
+        return root;
+    }
+
+    isFixed = false;
+    if (root->key() > key) {
+        root->setLeftChild(addNode(root->leftChild(), key, isFixed));
+        if (!isFixed) {
+            int leftHeight = height(root->leftChild());
+            int rightHeight = height(root->rightChild());
+            root->setHeight(std::max(leftHeight, rightHeight) + 1);
+
+            int balance = heightDifference(root);
+            if (balance != -1 && balance != 0) {
+                root = balancing(root, isFixed);
+            }
+        }
+    }
+    else {
+        root->setRightChild(addNode(root->rightChild(), key, isFixed));
+        if (!isFixed) {
+            int leftHeight = height(root->leftChild());
+            int rightHeight = height(root->rightChild());
+            root->setHeight(std::max(leftHeight, rightHeight) + 1);
+
+            int balance = heightDifference(root);
+            if (balance != 1 && balance != 0) {
+                root = balancing(root, isFixed);
+            }
+        }
+    }
+    return root;
 }
-else if (root->key() < key) {
-    root->setLeftChild(addNode(root->leftChild(), key));
-    //Вернулись из левого поддерева, балансируем
-}
-else {
-    root->setRightChild(addNode(root->rightChild(), key));
-    //Вернулись из правого поддерева, балансируем
-}
+
+BalancedTreeSearch::Node* BalancedTreeSearch::remove(Node* node, int key, bool& isFixed) {}
