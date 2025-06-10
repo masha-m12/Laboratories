@@ -15,11 +15,15 @@ public:
 
     Node* copyNodeSubtree(Node* root);
 
+    using BinaryTree::addNode;
+    using BinaryTree::deleteNodeByKey;
+
 protected:
     Node* addNode(Node* root, int key, bool& isFixed);
-    Node* remove(Node* node, int key, bool& isFixed);
+    Node* remove(Node* node, int key, bool& isDeleted, bool& isFixed);
 
 private:
+    void newHeight(BalancedTreeSearch::Node* node);
     int heightDifference(const Node* node) const;
     Node* balancing(Node* node, bool& isFixed);
     Node* rotateRight(Node* middle);
