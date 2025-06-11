@@ -21,10 +21,14 @@ public:
         Node* rightChild() const;
         void setRightChild(Node* rightChild);
 
+        int height() const;
+        void setHeight(int height);
+
     private:
         int m_key = 0;
         Node* m_leftChild = nullptr;
         Node* m_rightChild = nullptr;
+        int m_height = 1;
     };
 
     BinaryTree() = default;
@@ -74,14 +78,14 @@ protected:
     Node* remove(Node* node, Node* parent);
     virtual Node* findReplacement(Node* node);
 
+    int height(Node* node) const;
+    Node* copyTree(Node* root);
+
     Node* m_root = nullptr;
 
 private:
-    Node* copyTree(Node* root);
-
     void clear(Node* node);
     void deleteSubtree(Node* node);
-    int height(Node* node) const;
     int countNodes(Node* node) const;
 
     bool isBalanced(Node* node);
