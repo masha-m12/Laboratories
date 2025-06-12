@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Gittyup\OOP\BoolVector\BoolVector\BoolVector.cpp" />
     <ClCompile Include="HuffmanTree.cpp" />
     <ClCompile Include="lab5.cpp" />
   </ItemGroup>

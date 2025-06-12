@@ -21,6 +21,9 @@
     <ClCompile Include="HuffmanTree.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Gittyup\OOP\BoolVector\BoolVector\BoolVector.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HuffmanTree.h">
