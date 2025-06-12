@@ -48,11 +48,11 @@ public:
 
     void build(const std::string& fileName);
     double encode(const std::string& fileName, const std::string& encodedFileName);
-    bool decode(const std::string& encodedText, std::string& decodedText);
+    bool decode(const std::string& encodedFileName, std::string& decodedFileName);
 
 private:
     std::string encode(const char symbol, Node* node);
-    bool decode(std::istream& encodedStream, std::ostream& decodedStream);
+    char decode(std::istream& file, Node* node);
 
 private:
     Node* m_root = nullptr;

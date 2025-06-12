@@ -5,17 +5,22 @@
 
 int main()
 {
-    HuffmanTree tree;
-    tree.build("ehal greka cerez reku");
-    tree.print();
-    return 0;
-}
+    setlocale(LC_ALL, "russian");
 
-BoolVector::BoolVector(int length)
-    : m_length(length) {
-    m_cellCount = m_length / CellSize;
-    if (m_length % CellSize != 0) {
-        m_cellCount++;
-    }
-    m_cells = new Cell[m_cellCount];
+    HuffmanTree tree;
+
+    std::string fileName = "file.txt";
+    std::string encodedFileName = "encoded.txt";
+    std::string decodedFileName = "decoded.txt";
+
+    tree.build(fileName);
+    std::cout << "Дерево из списка частот:" << "\n";
+    tree.print();
+
+    double coefficient = tree.encode(fileName, encodedFileName);
+    std::cout << "Коэффициент сжатия: " << coefficient << "\n";
+
+    bool decoding = tree.decode(encodedFileName, decodedFileName);
+
+    return 0;
 }
