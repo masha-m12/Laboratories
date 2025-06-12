@@ -71,6 +71,10 @@ HuffmanTree::Node* HuffmanTree::Node::right() const {
     return m_right;
 }
 
+void HuffmanTree::Node::setRight(Node* right) {
+    m_right = right;
+}
+
 HuffmanTree::~HuffmanTree()
 {
     clear();
@@ -90,16 +94,22 @@ void HuffmanTree::print()
     m_root->printHorizontal(m_root);
 }
 
-void HuffmanTree::build(const std::string& text)
+void HuffmanTree::build(const std::string& fileName)
 {
     if (m_root)
     {
         clear();
     }
 
+    std::ifstream file(fileName);
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: " << fileName << "\n";
+        return;
+    }
+
     std::vector<Node*> nodes;
-    for (const char& symbol : text)
-    {
+    char symbol;
+    while (file.get(symbol)) {
         std::vector<Node*>::iterator it = std::find_if(
             nodes.begin(),
             nodes.end(),
@@ -124,6 +134,7 @@ void HuffmanTree::build(const std::string& text)
             node->setFrequency(node->frequency() + 1);
         }
     }
+    file.close();
 
     // Ещё одна безымянная функция, сложили в переменную
     auto sorter = [](Node* a, Node* b) -> bool
@@ -151,9 +162,51 @@ void HuffmanTree::build(const std::string& text)
     m_root = nodes.front();
 }
 
-double HuffmanTree::encode(const std::string& text, std::string& encodedText)
-{
+double HuffmanTree::encode(const std::string& fileName, const std::string& encodedFileName) {
+    std::ifstream file(fileName);
+    std::ofstream encodedFile(encodedFileName);
 
+    if (!file.is_open() || !encodedFile.is_open()) {
+        std::cerr << "Error opening file" << "\n";
+        return -1.0;
+    }
+
+    if (!m_root) {
+        build(fileName);
+        if (!m_root) {
+            return -1.0;
+        }
+    }
+
+    char symbol;
+    std::string encodedText;
+    double sizeInBits = 0.0;
+    double newSize = 0.0;
+
+    if (!m_root->left() && !m_root->right()) {
+        while (file.get(symbol)) {
+            encodedFile << "0";
+            sizeInBits += 8.0;
+            newSize += 1.0;
+        }
+    }
+    else {
+        while (file.get(symbol)) {
+            std::string code = encode(symbol, m_root);
+            if (code.empty()) {
+                std::cerr << "Symbol: " << symbol << " not found" << "\n";
+                return -1.0;
+            }
+            encodedFile << code;
+            sizeInBits += 8.0;
+            newSize += code.length();
+        }
+    }
+
+    file.close();
+    encodedFile.close();
+
+    return sizeInBits / newSize;
 }
 
 bool HuffmanTree::decode(const std::string& encodedText, std::string& decodedText)
@@ -161,9 +214,21 @@ bool HuffmanTree::decode(const std::string& encodedText, std::string& decodedTex
 
 }
 
-std::string HuffmanTree::encode(const char symbol)
-{
+std::string HuffmanTree::encode(const char symbol, Node* node) {
+    std::string string;
 
+    if (!node || (!node->left() && !node->right())) {
+        return string;
+    }
+
+    if (node->left() && node->left()->symbols().bitValue(symbol)) {
+        return "0" + encode(symbol, node->left());
+    }
+    else if (node->right() && node->right()->symbols().bitValue(symbol)) {
+        return "1" + encode(symbol, node->right());
+    }
+
+    return string;
 }
 
 bool HuffmanTree::decode(std::istream& encodedStream, std::ostream& decodedStream)
