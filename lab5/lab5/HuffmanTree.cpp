@@ -206,7 +206,7 @@ double HuffmanTree::encode(const std::string& fileName, const std::string& encod
     file.close();
     encodedFile.close();
 
-    return sizeInBits / newSize;
+    return static_cast<double>(sizeInBits) / newSize;
 }
 
 bool HuffmanTree::decode(const std::string& encodedFileName, std::string& decodedFileName) {
