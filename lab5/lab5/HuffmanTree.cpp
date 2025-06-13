@@ -180,14 +180,14 @@ double HuffmanTree::encode(const std::string& fileName, const std::string& encod
 
     char symbol;
     std::string encodedText;
-    double sizeInBits = 0.0;
-    double newSize = 0.0;
+    int sizeInBits = 0;
+    int newSize = 0;
 
     if (!m_root->left() && !m_root->right()) {
         while (file.get(symbol)) {
             encodedFile << "0";
-            sizeInBits += 8.0;
-            newSize += 1.0;
+            sizeInBits += 8;
+            newSize += 1;
         }
     }
     else {
@@ -198,7 +198,7 @@ double HuffmanTree::encode(const std::string& fileName, const std::string& encod
                 return -1.0;
             }
             encodedFile << code;
-            sizeInBits += 8.0;
+            sizeInBits += 8;
             newSize += code.length();
         }
     }
