@@ -11,10 +11,10 @@ public:
     HashTable(const HashTable& other);
     ~HashTable();
 
-    void add(int key, std::string& value);
+    void add(int key, const std::string& value);
     bool remove(int key);
 
-    bool contains(int key) const;
+    bool contains(int key);
     void swap(HashTable& other);
     void print();
     void resize(int capacity);
@@ -26,6 +26,7 @@ public:
     const std::string& operator[](int key) const;
 
 private:
+    std::list<std::pair<int, std::string>>::iterator find(int key, int hash);
     int m_size;
     int m_capacity;
     HashFunction* m_function;
