@@ -4,6 +4,15 @@
 HashTable::HashTable()
 {}
 
+HashTable::HashTable(int capacity)
+    : m_size(0), m_function(new HashFunctionFirst()) {
+    if (capacity < 0) {
+        std::cerr << "Значение не может быть отрицательным";
+    }
+    m_capacity = capacity;
+    m_table.resize(m_capacity);
+}
+
 HashTable::HashTable(const HashTable& other)
     :m_size(other.m_size), m_capacity(other.m_capacity), m_table(other.m_table)
 {}
@@ -61,6 +70,37 @@ void HashTable::swap(HashTable& other) {
     std::swap(m_table, other.m_table);
 }
 
+void HashTable::print() const {
+    std::cout << "Хеш-таблица: количество элементов: " << m_size << ", ёмкость: " << m_capacity << "\n";
+    for (int i = 0; i < m_capacity; ++i) {
+        const auto& chain = m_table[i];
+        if (!chain.empty()) {
+            for (const auto& pair : chain) {
+                std::cout << "Ключ: " << pair.first << ", значение: " << pair.second << "\n";
+            }
+        }
+    }
+}
+
+void HashTable::resize(int capacity) {
+    if (capacity <= m_size) {
+        return;
+    }
+
+    m_capacity = capacity;
+    rehash();
+}
+
+void HashTable::setHashFunction(HashFunction* function) {
+    if (!function) {
+        return;
+    }
+
+    delete m_function;
+    m_function = function;
+    rehash();
+}
+
 HashTable& HashTable::operator=(const HashTable& other) {
     if (this == &other) {
         return *this;
@@ -68,6 +108,48 @@ HashTable& HashTable::operator=(const HashTable& other) {
     HashTable hash(other);
     swap(hash);
     return *this;
+}
+
+std::string& HashTable::operator[](int key) {
+    int index = m_function->computeHash(key, m_capacity);
+
+    for (auto& pair : m_table[index]) {
+        if (pair.first == key) {
+            return pair.second;
+        }
+    }
+
+    m_table[index].emplace_back(key, std::string{});
+    m_size++;
+
+    return m_table[index].back().second;
+}
+
+const std::string& HashTable::operator[](int key) const {
+    int hash = m_function->computeHash(key, m_capacity);
+    auto it = find(key, hash);
+
+    if (it != m_table[hash].end()) {
+        return it->second;
+    }
+    else {
+        std::cerr << "Ключ не найден в хеш-таблице";
+    }
+}
+
+void HashTable::rehash() {
+    std::vector<std::list<std::pair<int, std::string>>> newTable(m_capacity);
+    int newSize = 0;
+
+    for (const auto& chain : m_table) {
+        for (const auto& pair : chain) {
+            int newHash = m_function->computeHash(pair.first, m_capacity);
+            newTable[newHash].push_back(pair);
+            newSize++;
+        }
+    }
+    m_table.swap(newTable);
+    m_size = newSize;
 }
 
 std::list<std::pair<int, std::string>>::iterator HashTable::find(int key, int hash) {
@@ -78,4 +160,43 @@ std::list<std::pair<int, std::string>>::iterator HashTable::find(int key, int ha
         }
     }
     return chain.end();
+}
+
+std::list<std::pair<int, std::string>>::const_iterator HashTable::find(int key, int hash) const {
+    const auto& chain = m_table[hash];
+    for (auto it = chain.begin(); it != chain.end(); ++it) {
+        if (it->first == key) {
+            return it;
+        }
+    }
+    return chain.end();
+}
+
+int HashFunctionFirst::computeHash(int key, int capacity) {
+    if (capacity == 0) {
+        return 0;
+    }
+
+    const int c = 18 % 5;
+    const int d = 18 % 7;
+
+    int h0 = key % capacity;
+    return (h0 + c + d) % capacity;
+}
+
+HashFunction* HashFunctionFirst::clone() const {
+    return new HashFunctionFirst(*this);
+}
+
+int HashFunctionThird::computeHash(int key, int capacity) {
+    if (capacity == 0) {
+        return 0;
+    }
+
+    int h0 = key % capacity;
+    return ((h0 + 1) * (1 + key % (capacity - 2))) % capacity;
+}
+
+HashFunction* HashFunctionThird::clone() const {
+    return new HashFunctionThird(*this);
 }
