@@ -7,7 +7,7 @@ HashTable::HashTable()
 HashTable::HashTable(int capacity)
     : m_size(0), m_function(new HashFunctionFirst()) {
     if (capacity < 0) {
-        std::cerr << "Значение не может быть отрицательным";
+        std::cerr << "Capatity can't be <0";
     }
     m_capacity = capacity;
     m_table.resize(m_capacity);
@@ -71,12 +71,12 @@ void HashTable::swap(HashTable& other) {
 }
 
 void HashTable::print() const {
-    std::cout << "Хеш-таблица: количество элементов: " << m_size << ", ёмкость: " << m_capacity << "\n";
+    std::cout << "HashTable: number of elements: " << m_size << ", capacity: " << m_capacity << "\n";
     for (int i = 0; i < m_capacity; ++i) {
         const auto& chain = m_table[i];
         if (!chain.empty()) {
             for (const auto& pair : chain) {
-                std::cout << "Ключ: " << pair.first << ", значение: " << pair.second << "\n";
+                std::cout << "Key: " << pair.first << ", value: " << pair.second << "\n";
             }
         }
     }
@@ -133,7 +133,7 @@ const std::string& HashTable::operator[](int key) const {
         return it->second;
     }
     else {
-        std::cerr << "Ключ не найден в хеш-таблице";
+        std::cerr << "Key wasn't found in HashTable";
     }
 }
 
