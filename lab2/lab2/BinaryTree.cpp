@@ -42,6 +42,14 @@ void BinaryTree::Node::setHeight(int height) {
     m_height = height;
 }
 
+int BinaryTree::Node::balance() const {
+    return m_balance;
+}
+
+void BinaryTree::Node::setBalance(int balance) {
+    m_balance = balance;
+}
+
 BinaryTree::BinaryTree(const BinaryTree& other) {
     m_root = copyTree(other.m_root);
 }

@@ -29,40 +29,36 @@ void BalancedTreeSearch::newHeight(BalancedTreeSearch::Node* node) {
     }
 }
 
-BalancedTreeSearch::Node* BalancedTreeSearch::balancing(Node* node, bool& isFixed) {
+BalancedTreeSearch::Node* BalancedTreeSearch::balancing(Node* node, bool& isFixed, bool isOperationAdd) {
     if (!node) {
         return nullptr;
     }
 
-    newHeight(node);
     int balance = heightDifference(node);
 
     if (balance == 0) {
         isFixed = true;
     }
     else if (balance == -2) {
-        if (heightDifference(node->leftChild()) <= 0) {
-            node = rotateRight(node);
-        }
-        else {
+        if (heightDifference(node->leftChild()) > 0) {
             Node* rotatedSubtree = rotateLeft(node->leftChild());
             node->setLeftChild(rotatedSubtree);
-            node = rotateRight(node);
         }
-        isFixed = true;
+        node = rotateRight(node);
+        if (isOperationAdd) {
+            isFixed = true;
+        }
     }
     else if (balance == 2) {
-        if (heightDifference(node->rightChild()) >= 0) {
-            node = rotateLeft(node);
-        }
-        else {
+        if (heightDifference(node->rightChild()) < 0) {
             Node* rotatedSubtree = rotateRight(node->rightChild());
             node->setRightChild(rotatedSubtree);
-            node = rotateLeft(node);
         }
-        isFixed = true;
+        node = rotateLeft(node);
+        if (isOperationAdd) {
+            isFixed = true;
+        }
     }
-
     return node;
 }
 
@@ -90,7 +86,7 @@ BalancedTreeSearch::Node* BalancedTreeSearch::rotateLeft(Node* middle) {
 
 BalancedTreeSearch::Node* BalancedTreeSearch::addNode(Node* root, int key, bool& isFixed) {
     if (!root) {
-        isFixed = true;
+        isFixed = false;
         root = new Node(key);
         return root;
     }
@@ -104,21 +100,15 @@ BalancedTreeSearch::Node* BalancedTreeSearch::addNode(Node* root, int key, bool&
     if (root->key() > key) {
         root->setLeftChild(addNode(root->leftChild(), key, isFixed));
         if (!isFixed) {
-            newHeight(root);
-            int balance = heightDifference(root);
-            if (balance < -1 || balance > 1) {
-                root = balancing(root, isFixed);
-            }
+            root->setBalance(root->balance() - 1);
+            root = balancing(root, isFixed, false);
         }
     }
     else {
         root->setRightChild(addNode(root->rightChild(), key, isFixed));
         if (!isFixed) {
-            newHeight(root);
-            int balance = heightDifference(root);
-            if (balance < -1 || balance > 1) {
-                root = balancing(root, isFixed);
-            }
+            root->setBalance(root->balance() + 1);
+            root = balancing(root, isFixed, false);
         }
     }
     return root;
@@ -133,79 +123,46 @@ BalancedTreeSearch::Node* BalancedTreeSearch::remove(Node* node, int key, bool& 
 
     if (key < node->key()) {
         node->setLeftChild(remove(node->leftChild(), key, isDeleted, isFixed));
-        if (!isFixed && isDeleted) {
-            newHeight(node);
-            int balance = heightDifference(node);
-            if (balance < -1 || balance > 1) {
-                node = balancing(node, isFixed);
-            }
-        }
     }
     else if (key > node->key()) {
         node->setRightChild(remove(node->rightChild(), key, isDeleted, isFixed));
-        if (!isFixed && isDeleted) {
-            newHeight(node);
-            int balance = heightDifference(node);
-            if (balance < -1 || balance > 1) {
-                node = balancing(node, isFixed);
-            }
-        }
     }
     else {
         isDeleted = true;
-        isFixed = false;
         Node* left = node->leftChild();
         Node* right = node->rightChild();
-        delete node;
 
-        if (!right) {
-            if (!left) {
-                isFixed = true;
+        if (!right || !left) {
+            delete node;
+            isFixed = false;
+            if (left) {
+                return left;
             }
-            node = left;
-            if (node) {
-                newHeight(node);
-                node = balancing(node, isFixed);
+            else {
+                return right;
             }
-            return node;
         }
 
         Node* min = BinaryTreeSearch::searchMin(right);
-        Node* minRight = min->rightChild();
+        node->setKey(min->key());
 
-        if (min == right) {
-            min->setLeftChild(left);
-            node = min;
-            newHeight(node);
-            node = balancing(node, isFixed);
-        }
-        else {
-            Node* minParent = right;
-
-            while (minParent->leftChild() != min) {
-                minParent = minParent->leftChild();
-            }
-
-            minParent->setLeftChild(minRight);
-            min->setLeftChild(left);
-            min->setRightChild(right);
-            node = min;
-            newHeight(right);
-            node = balancing(node, isFixed);
-
-            if (!isFixed) {
-                bool flagIsDeleted = false;
-                bool flagIsFixed = false;
-                newHeight(right);
-
-                right = remove(right, min->key(), flagIsDeleted, flagIsFixed);
-                node->setRightChild(right);
-
-                newHeight(right);
-                newHeight(node);
-                node = balancing(node, isFixed);
-            }
-        }
+        bool flagIsDeleted;
+        node->setRightChild(remove(node->rightChild(), min->key(), flagIsDeleted, isFixed));
     }
+
+    newHeight(node);
+    node = balancing(node, isFixed, false);
+
     return node;
+}
+
+void BalancedTreeSearch::add(int key) {
+    bool isFixed = false;
+    m_root = addNode(m_root, key, isFixed);
+}
+
+void BalancedTreeSearch::remove(int key) {
+    bool isDeleted = false;
+    bool isFixed = false;
+    m_root = remove(m_root, key, isDeleted, isFixed);
 }

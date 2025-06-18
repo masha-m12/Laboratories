@@ -24,11 +24,15 @@ public:
         int height() const;
         void setHeight(int height);
 
+        int balance() const;
+        void setBalance(int balance);
+
     private:
         int m_key = 0;
         Node* m_leftChild = nullptr;
         Node* m_rightChild = nullptr;
         int m_height = 1;
+        int m_balance;
     };
 
     BinaryTree() = default;

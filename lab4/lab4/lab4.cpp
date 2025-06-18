@@ -9,25 +9,25 @@ int main()
     BalancedTreeSearch tree;
 
     std::cout << "Добавляем 10, 20, 30 в дерево:\n";
-    tree.addNode(10);
-    tree.addNode(20);
-    tree.addNode(30);
+    tree.add(10);
+    tree.add(20);
+    tree.add(30);
     tree.printHorizontal();
     std::cout << "\n";
 
     std::cout << "Добавляем 4, 7 в дерево:\n";
-    tree.addNode(7);
-    tree.addNode(4);
+    tree.add(7);
+    tree.add(4);
+    tree.printHorizontal();
+    std::cout << "\n";
+
+    std::cout << "Удаляем 30:\n";
+    tree.remove(30);
     tree.printHorizontal();
     std::cout << "\n";
 
     std::cout << "Удаляем 4:\n";
-    tree.deleteNodeByKey(4);
-    tree.printHorizontal();
-    std::cout << "\n";
-
-    std::cout << "Удаляем 20:\n";
-    tree.deleteNodeByKey(20);
+    tree.remove(4);
     tree.printHorizontal();
     std::cout << "\n";
 

@@ -15,8 +15,8 @@ public:
 
     Node* copyNodeSubtree(Node* root);
 
-    using BinaryTree::addNode;
-    using BinaryTree::deleteNodeByKey;
+    void add(int key);
+    void remove(int key);
 
 protected:
     Node* addNode(Node* root, int key, bool& isFixed);
@@ -25,7 +25,7 @@ protected:
 private:
     void newHeight(BalancedTreeSearch::Node* node);
     int heightDifference(const Node* node) const;
-    Node* balancing(Node* node, bool& isFixed);
+    Node* balancing(Node* node, bool& isFixed, bool isOperationAdd);
     Node* rotateRight(Node* middle);
     Node* rotateLeft(Node* middle);
 };
