@@ -156,13 +156,15 @@ BalancedTreeSearch::Node* BalancedTreeSearch::remove(Node* node, int key, bool& 
     return node;
 }
 
-void BalancedTreeSearch::add(int key) {
+BalancedTreeSearch::Node* BalancedTreeSearch::addNode(int key) {
     bool isFixed = false;
     m_root = addNode(m_root, key, isFixed);
+    return m_root;
 }
 
-void BalancedTreeSearch::remove(int key) {
+bool BalancedTreeSearch::deleteNodeByKey(int key) {
     bool isDeleted = false;
     bool isFixed = false;
     m_root = remove(m_root, key, isDeleted, isFixed);
+    return isDeleted;
 }

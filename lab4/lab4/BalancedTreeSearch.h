@@ -10,13 +10,8 @@ public:
     BalancedTreeSearch(BalancedTreeSearch&& other) noexcept;
     ~BalancedTreeSearch() override = default;
 
-    BalancedTreeSearch& operator=(const BalancedTreeSearch& other);
-    BalancedTreeSearch& operator=(BalancedTreeSearch&& other) noexcept;
-
-    Node* copyNodeSubtree(Node* root);
-
-    void add(int key);
-    void remove(int key);
+    Node* addNode(int key) override;
+    bool deleteNodeByKey(int key) override;
 
 protected:
     Node* addNode(Node* root, int key, bool& isFixed);

@@ -53,11 +53,11 @@ public:
     int max() const;
 
     virtual Node* addNode(Node* root, int key);
-    Node* addNode(int key);
+    virtual Node* addNode(int key);
 
     bool searchNodeWithParent(Node* node, Node* parent, int key, Node*& findNode, Node*& parentFindNode);
 
-    bool deleteNodeByKey(int key);
+    virtual bool deleteNodeByKey(int key);
     bool searchNodeByKey(int key) const;
 
     bool isBalanced();
