@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include "C:/Users/Mariya/Desktop/Gittyup/OOP/BoolVector/BoolVector/BoolVector.h"
+#include "../../../Gittyup/OOP/BoolVector/BoolVector/BoolVector.h"
 
 class HuffmanTree
 {
