@@ -222,6 +222,7 @@ Makefile: ../../HashTableWidget.pro C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mk
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mkspecs/features/qt_config.prf \
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mkspecs/win32-g++/qmake.conf \
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mkspecs/features/exclusive_builds.prf \
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mkspecs/features/toolchain.prf \
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mkspecs/features/default_pre.prf \
@@ -250,7 +251,6 @@ Makefile: ../../HashTableWidget.pro C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mk
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/lib/Qt5Gui.prl \
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/lib/Qt5Core.prl \
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/lib/qtmain.prl \
-		.qmake.stash \
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mkspecs/features/build_pass.prf
 	$(QMAKE) -o Makefile ..\..\HashTableWidget.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
 C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mkspecs/features/spec_pre.prf:
@@ -405,6 +405,7 @@ C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mkspecs/features/qt_functions.prf:
 C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mkspecs/features/qt_config.prf:
 C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mkspecs/win32-g++/qmake.conf:
 C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mkspecs/features/spec_post.prf:
+.qmake.stash:
 C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mkspecs/features/exclusive_builds.prf:
 C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mkspecs/features/toolchain.prf:
 C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mkspecs/features/default_pre.prf:
@@ -433,7 +434,6 @@ C:/Users/Mariya/Desktop/5.15.2/mingw81_32/lib/Qt5Widgets.prl:
 C:/Users/Mariya/Desktop/5.15.2/mingw81_32/lib/Qt5Gui.prl:
 C:/Users/Mariya/Desktop/5.15.2/mingw81_32/lib/Qt5Core.prl:
 C:/Users/Mariya/Desktop/5.15.2/mingw81_32/lib/qtmain.prl:
-.qmake.stash:
 C:/Users/Mariya/Desktop/5.15.2/mingw81_32/mkspecs/features/build_pass.prf:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ..\..\HashTableWidget.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"

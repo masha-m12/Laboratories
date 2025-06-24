@@ -471,7 +471,51 @@ release/BaseHashTableWidget.o: ../../BaseHashTableWidget.cpp ../../BaseHashTable
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtCore/qfiledevice.h \
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qvector2d.h \
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qtouchdevice.h \
-		ui_BaseHashTableWidget.h
+		ui_BaseHashTableWidget.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtCore/QVariant \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QApplication \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qapplication.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtCore/qcoreapplication.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtCore/qeventloop.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qdesktopwidget.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qguiapplication.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qinputmethod.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QComboBox \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qcombobox.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qabstractitemdelegate.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qstyleoption.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qabstractspinbox.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qvalidator.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtCore/qregularexpression.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qicon.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qslider.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qabstractslider.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qstyle.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qtabbar.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qtabwidget.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qrubberband.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qframe.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtCore/qabstractitemmodel.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QGridLayout \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qgridlayout.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qlayout.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qlayoutitem.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qboxlayout.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QHBoxLayout \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QLabel \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qlabel.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QLineEdit \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qlineedit.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qtextcursor.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qtextformat.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qpen.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qtextoption.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QPushButton \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qpushbutton.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qabstractbutton.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QSpinBox \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qspinbox.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QVBoxLayout
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\BaseHashTableWidget.o ..\..\BaseHashTableWidget.cpp
 
 release/HashTable.o: ../../HashTable.cpp ../../HashTable.h
@@ -600,7 +644,48 @@ release/SceneHashTableWidget.o: ../../SceneHashTableWidget.cpp C:/Users/Mariya/D
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qframe.h \
 		../../BaseHashTableWidget.h \
 		../../HashTable.h \
-		ui_BaseHashTableWidget.h
+		ui_BaseHashTableWidget.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtCore/QVariant \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QApplication \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qapplication.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtCore/qcoreapplication.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtCore/qeventloop.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qdesktopwidget.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qguiapplication.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qinputmethod.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QComboBox \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qcombobox.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qabstractitemdelegate.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qstyleoption.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qabstractspinbox.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qvalidator.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtCore/qregularexpression.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qicon.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qslider.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qabstractslider.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qstyle.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qtabbar.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qtabwidget.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qrubberband.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtCore/qabstractitemmodel.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QGridLayout \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qgridlayout.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qlayout.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qlayoutitem.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qboxlayout.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QHBoxLayout \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QLabel \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qlabel.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QLineEdit \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qlineedit.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qtextcursor.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qtextformat.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QPushButton \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qpushbutton.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qabstractbutton.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QSpinBox \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qspinbox.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QVBoxLayout
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\SceneHashTableWidget.o ..\..\SceneHashTableWidget.cpp
 
 release/TableElementWidget.o: ../../TableElementWidget.cpp ../../TableElementWidget.h \
@@ -707,7 +792,27 @@ release/TableElementWidget.o: ../../TableElementWidget.cpp ../../TableElementWid
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtCore/qfiledevice.h \
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qvector2d.h \
 		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qtouchdevice.h \
-		ui_TableElementWidget.h
+		ui_TableElementWidget.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtCore/QVariant \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QApplication \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qapplication.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtCore/qcoreapplication.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtCore/qeventloop.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qdesktopwidget.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qguiapplication.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qinputmethod.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QHBoxLayout \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qboxlayout.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qlayout.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qlayoutitem.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qgridlayout.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/QLineEdit \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qlineedit.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtWidgets/qframe.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qtextcursor.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qtextformat.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qpen.h \
+		C:/Users/Mariya/Desktop/5.15.2/mingw81_32/include/QtGui/qtextoption.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\TableElementWidget.o ..\..\TableElementWidget.cpp
 
 release/main.o: ../../main.cpp ../../SceneHashTableWidget.h \
