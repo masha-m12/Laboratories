@@ -121,7 +121,7 @@ std::string& HashTable::operator[](int key) {
     m_table[hash].emplace_back(key, std::string{});
     m_size++;
 
-    return m_table[index].back().second;
+    return m_table[hash].back().second;
 }
 
 const std::string& HashTable::operator[](int key) const {
