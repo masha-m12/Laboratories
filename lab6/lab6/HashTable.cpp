@@ -46,7 +46,7 @@ bool HashTable::remove(int key) {
     return false;
 }
 
-bool HashTable::contains(int key) {
+bool HashTable::contains(int key) const {
     int hash = m_function->computeHash(key, m_capacity);
     auto it = find(key, hash);
 
@@ -100,6 +100,10 @@ HashFunction* HashTable::getHashFunction() {
     return m_function;
 }
 
+const std::vector<std::list<std::pair<int, std::string>>>& HashTable::hashTable() const {
+    return m_table;
+}
+
 HashTable& HashTable::operator=(const HashTable& other) {
     if (this == &other) {
         return *this;
@@ -119,7 +123,6 @@ std::string& HashTable::operator[](int key) {
     }
 
     m_table[hash].emplace_back(key, std::string{});
-    m_size++;
 
     return m_table[hash].back().second;
 }

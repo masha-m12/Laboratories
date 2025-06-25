@@ -44,19 +44,21 @@ void SceneHashTableWidget::addKeyValue()
 void SceneHashTableWidget::resizeTable()
 {
     // TODO: resize хеш-таблицы
-    int oldSize = m_rows.size();
     int newSize = ui->spinBox_size->value();
-    for (int i = newSize; i < oldSize; ++i)
-    {
-        for (ElementData& data : m_rows[i])
-        {
+
+    m_hashTable.resize(newSize);
+
+    for (auto& row : m_rows) {
+        for (ElementData& data : row) {
             m_scene->removeItem(data.proxy);
             data.widget->deleteLater();
         }
     }
+
+    m_rows.clear();
     m_rows.resize(newSize);
 
-    for (int i = oldSize; i < newSize; ++i)
+    for (int i = 0; i < newSize; ++i)
     {
         addBlankElement(i, 0);
     }
@@ -64,11 +66,48 @@ void SceneHashTableWidget::resizeTable()
     {
         // TODO: заполнить новыми значениями из хеш-таблицы
         // (добавить/удалить элементы коллизий при необходимости)
+        const auto& chain = m_hashTable.hashTable()[i];
+        int col = 0;
+
+        for (auto it = chain.begin(); it != chain.end(); ++it, ++col)
+        {
+            if (col > 0)
+            {
+                addBlankElement(i, col);
+            }
+
+            m_rows[i][col].widget->setKey(it->first);
+            m_rows[i][col].widget->setValue(QString::fromStdString(it->second));
+        }
     }
 }
 
-void SceneHashTableWidget::findKey() {}
-void SceneHashTableWidget::deleteByKey() {}
+void SceneHashTableWidget::findKey()
+{
+    int key = ui->spinBox_key->value();
+
+    for (auto& row : m_rows) {
+        for (auto& element : row) {
+            element.widget->setColor(Qt::white);
+        }
+    }
+
+    int hash = m_hashTable.getHashFunction()->computeHash(key, m_rows.size());
+    auto& chain = m_rows[hash];
+
+    for (auto& element : chain) {
+        if (element.widget && element.widget->key() == key) {
+            element.widget->setColor(Qt::green);
+            return;
+        }
+    }
+}
+
+void SceneHashTableWidget::deleteByKey() {
+    int key = ui->spinBox_key->value();
+    m_hashTable.remove(key);
+    SceneHashTableWidget::resizeTable();
+}
 
 void SceneHashTableWidget::changeFunction(int index) {
     if (index == 0) {

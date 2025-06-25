@@ -34,6 +34,8 @@ public:
      */
     void clear();
 
+    void setColor(const QColor& color);
+
 signals:
     /**
      * @brief Сигнал, вызывающийся при изменении значения элемента таблицы через GUI.

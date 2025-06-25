@@ -46,6 +46,14 @@ void TableElementWidget::clear()
     ui->lineEdit_value->clear();
 }
 
+void TableElementWidget::setColor(const QColor& color)
+{
+    QPalette palette = ui->lineEdit_key->palette();
+    palette.setColor(QPalette::Base, color);
+    ui->lineEdit_key->setPalette(palette);
+    ui->lineEdit_value->setPalette(palette);
+}
+
 void TableElementWidget::onValueChanged(const QString &value)
 {
     if (!isEmpty())

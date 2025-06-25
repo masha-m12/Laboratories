@@ -34,12 +34,15 @@ public:
     void add(int key, const std::string& value);
     bool remove(int key);
 
-    bool contains(int key);
+    bool contains(int key) const;
     void swap(HashTable& other);
     void print() const;
     void resize(int capacity);
+
     void setHashFunction(HashFunction* function);
     HashFunction* getHashFunction();
+
+    const std::vector<std::list<std::pair<int, std::string>>>& hashTable() const;
 
     HashTable& operator=(const HashTable& other);
 
